@@ -1,5 +1,16 @@
+# 🗂 Backend build files
 bin/
 obj/
 **/bin/
 **/obj/
 *.db
+
+# 🌐 Frontend (React + Vite) files
+node_modules/
+dist/
+.env
+.env.local
+
+# Mac/Windows files (optional but recommended)
+.DS_Store
+Thumbs.db
