@@ -11,21 +11,25 @@ var builder = WebApplication.CreateBuilder(args);
 // ==============================
 // 🔐 JWT Authentication Setup
 // ==============================
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
-    });
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+});
 
 // 🔐 Register JWT Generator Service
 builder.Services.AddScoped<JwtService>();
@@ -40,21 +44,6 @@ builder.Services.AddDbContext<LibraryContext>(options =>
 // 📌 Add Controllers
 // ==============================
 builder.Services.AddControllers();
-
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
-    });
-
 
 // ==============================
 // 🌐 CORS for React
@@ -73,7 +62,7 @@ builder.Services.AddCors(options =>
 // ==============================
 // 📌 OpenAPI (Swagger, optional)
 // ==============================
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(); // if this was in template, keep it
 
 // ==============================
 // 🚀 Build App
@@ -83,23 +72,20 @@ var app = builder.Build();
 // 🌐 Enable CORS
 app.UseCors("AllowReactApp");
 
-// 🔐 Enable Auth Middleware
+// 🔐 Enable Auth Middleware (only once)
 app.UseAuthentication();
 app.UseAuthorization();
 
 // 🚀 Map Controllers
 app.MapControllers();
 
-app.UseAuthentication();
-app.UseAuthorization();
-
-
 // ==============================
 // 🌦 Dummy Test Endpoint (Optional)
 // ==============================
 var summaries = new[]
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    "Freezing", "Bracing", "Chilly", "Cool", "Mild",
+    "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
 app.MapGet("/weatherforecast", () =>

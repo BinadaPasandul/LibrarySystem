@@ -37,9 +37,7 @@ function AddBook() {
         
         {/* Gradient Header */}
         <div className="bg-gradient-to-r from-slate-900 to-indigo-900 p-6 flex items-center gap-3">
-          <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-3 rounded-2xl shadow-lg">
-            
-          </div>
+
           <h2 className="text-2xl font-bold text-white tracking-wide">Add New Book</h2>
         </div>
 
@@ -78,20 +76,20 @@ function AddBook() {
               onChange={(e) => setCategory(e.target.value)}
               className="w-full px-4 py-3 bg-white/90 border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700"
             >
-              <option value="">📌 Select Category</option>
-              <option value="Fiction">✨ Fiction</option>
-              <option value="Non-Fiction">📖 Non-Fiction</option>
-              <option value="Science">🔬 Science</option>
-              <option value="Biography">👤 Biography</option>
-              <option value="History">🏛 History</option>
-              <option value="Other">📌 Other</option>
+              <option value="">Select Category</option>
+              <option value="Fiction">Fiction</option>
+              <option value="Non-Fiction">Non-Fiction</option>
+              <option value="Science">Science</option>
+              <option value="Biography">Biography</option>
+              <option value="History">History</option>
+              <option value="Other">Other</option>
             </select>
 
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
             >
-              ➕ Add Book
+               Add Book
             </button>
           </form>
         </div>

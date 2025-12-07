@@ -83,43 +83,59 @@ function BookList() {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-2xl shadow-xl border border-white/60">
-        <table className="w-full text-slate-800">
-          <thead className="bg-gradient-to-r from-slate-900 to-indigo-900 text-white uppercase text-sm">
-            <tr>
-              <th className="px-4 py-3">ID</th>
-              <th className="px-4 py-3">Title</th>
-              <th className="px-4 py-3">Author</th>
-              <th className="px-4 py-3">Description</th>
-              <th className="px-4 py-3">Category</th>
-              {isLoggedIn() && <th className="px-4 py-3">Action</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredBooks.map(b => (
-              <tr key={b.id} className="odd:bg-white/80 even:bg-slate-100 hover:bg-indigo-50 transition">
-                <td className="px-4 py-3 border">{b.id}</td>
-                <td className="px-4 py-3 border">{b.title}</td>
-                <td className="px-4 py-3 border">{b.author}</td>
-                <td className="px-4 py-3 border">{b.description}</td>
-                <td className="px-4 py-3 border">{b.category}</td>
-                {isLoggedIn() && (
-                  <td className="px-4 py-3 border text-center flex gap-3 justify-center">
-                    <Link to={`/edit/${b.id}`}>
-                      <button className="px-3 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-md hover:shadow-lg transition">
-                         Edit
-                      </button>
-                    </Link>
-                    <button onClick={() => handleDelete(b.id)} className="px-3 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 shadow-md hover:shadow-lg transition">
-                       Delete
-                    </button>
-                  </td>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {/* Table */}
+<div className="overflow-x-auto rounded-2xl shadow-xl border border-slate-200">
+  <table className="w-full text-slate-800 border-collapse">
+    
+    <thead className="bg-gradient-to-r from-slate-900 to-indigo-900 text-white uppercase text-sm">
+      <tr>
+        <th className="px-5 py-3 text-left">ID</th>
+        <th className="px-5 py-3 text-left">Title</th>
+        <th className="px-5 py-3 text-left">Author</th>
+        <th className="px-5 py-3 text-left">Description</th>
+        <th className="px-5 py-3 text-left">Category</th>
+        {isLoggedIn() && <th className="px-5 py-3 text-center">Action</th>}
+      </tr>
+    </thead>
+
+    <tbody className="divide-y divide-slate-300">
+      {filteredBooks.map(b => (
+        <tr key={b.id} className="hover:bg-indigo-50 transition">
+          <td className="px-5 py-3">{b.id}</td>
+          <td className="px-5 py-3 font-medium">{b.title}</td>
+          <td className="px-5 py-3">{b.author}</td>
+          <td className="px-5 py-3">{b.description}</td>
+          <td className="px-5 py-3">{b.category}</td>
+
+          {isLoggedIn() && (
+            <td className="px-5 py-3 text-center">
+              <div className="flex justify-center gap-4">
+
+                <Link to={`/edit/${b.id}`}>
+                  <button
+                    className="px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                  >
+                    Edit
+                  </button>
+                </Link>
+
+                <button
+                  onClick={() => handleDelete(b.id)}
+                  className="px-3 py-1.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                >
+                  Delete
+                </button>
+
+              </div>
+            </td>
+          )}
+        </tr>
+      ))}
+    </tbody>
+
+  </table>
+</div>
+
     </div>
   );
 }
