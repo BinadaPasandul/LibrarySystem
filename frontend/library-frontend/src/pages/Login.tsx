@@ -2,29 +2,37 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
+// The Login component accepts a function (onLogin) to update app state when user logs in
 function Login({ onLogin }: { onLogin: (user: string) => void }) {
+  // Form state management
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  // Used to disable button and show loader during request
   const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
+  // Handles submit event for Login
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    axios.post("http://localhost:5156/api/Auth/login", { username, password })
-      .then(res => {
+    axios
+      .post("http://localhost:5156/api/Auth/login", { username, password })
+      .then((res) => {
+        // Store token and username locally for protected routes
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", res.data.username);
 
         onLogin(res.data.username);
 
-        // Success animation delay
+        // Small delay for UI effect, then redirect to home
         setTimeout(() => {
           navigate("/");
         }, 500);
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err.response?.data?.message || "Invalid Credentials");
       })
       .finally(() => {
@@ -34,19 +42,22 @@ function Login({ onLogin }: { onLogin: (user: string) => void }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-4">
+      {/* Background animated blur elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
       </div>
 
+      {/* Login Form Container */}
       <div className="relative w-full max-w-md">
-        {/* Decorative Elements */}
+        {/* Decorative background shapes */}
         <div className="absolute -top-6 -left-6 w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl rotate-12 opacity-10"></div>
         <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-3xl -rotate-12 opacity-10"></div>
 
-        {/* Login Card */}
+        {/* Card */}
         <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden">
-          {/* Header */}
+          
+          {/* Header Section */}
           <div className="bg-gradient-to-r from-slate-900 to-indigo-900 p-8">
             <div className="flex items-center justify-center mb-4">
               <div className="bg-gradient-to-br from-blue-400 to-purple-500 p-4 rounded-2xl shadow-lg">
@@ -55,13 +66,17 @@ function Login({ onLogin }: { onLogin: (user: string) => void }) {
                 </svg>
               </div>
             </div>
-            <h2 className="text-3xl font-bold text-center text-white mb-2">Welcome Back</h2>
+            <h2 className="text-3xl font-bold text-center text-white mb-2">
+              Welcome Back
+            </h2>
             <p className="text-center text-blue-200">Sign in to Book Ledger</p>
           </div>
 
-          {/* Form */}
+          {/* Login Form */}
           <div className="p-8">
             <form onSubmit={handleLogin} className="space-y-6">
+
+              {/* Username Input */}
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
                   <span className="flex items-center gap-2">
@@ -77,11 +92,12 @@ function Login({ onLogin }: { onLogin: (user: string) => void }) {
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 placeholder:text-slate-400"
                   disabled={isLoading}
+                  className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-slate-400"
                 />
               </div>
 
+              {/* Password Input */}
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
                   <span className="flex items-center gap-2">
@@ -97,15 +113,16 @@ function Login({ onLogin }: { onLogin: (user: string) => void }) {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 placeholder:text-slate-400"
                   disabled={isLoading}
+                  className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-slate-400"
                 />
               </div>
 
+              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3.5 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center justify-center gap-3"
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3.5 rounded-xl font-semibold shadow-lg flex items-center justify-center gap-3 disabled:opacity-50"
               >
                 {isLoading ? (
                   <>
@@ -123,17 +140,15 @@ function Login({ onLogin }: { onLogin: (user: string) => void }) {
               </button>
             </form>
 
+            {/* Register Redirect */}
             <div className="mt-1 pt-6 border-t border-slate-100 text-center">
               <p className="text-slate-600">
                 Don't have an account?{" "}
-                <Link 
-                  to="/register" 
+                <Link
+                  to="/register"
                   className="text-blue-600 hover:text-blue-800 font-semibold transition-colors inline-flex items-center gap-1 group"
                 >
                   Create one now
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
                 </Link>
               </p>
             </div>
@@ -141,7 +156,7 @@ function Login({ onLogin }: { onLogin: (user: string) => void }) {
         </div>
       </div>
 
-      {/* Add animation styles to your global CSS or style tag */}
+      {/* Background animation styles */}
       <style>{`
         @keyframes blob {
           0% { transform: translate(0px, 0px) scale(1); }

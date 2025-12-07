@@ -19,57 +19,67 @@ namespace backend.Controllers
             _jwt = jwt;
         }
 
-       // 📝 REGISTER USER
-[HttpPost("register")]
-public async Task<IActionResult> Register([FromBody] User user)
-{
-    if (string.IsNullOrWhiteSpace(user.Username) || string.IsNullOrWhiteSpace(user.Password))
-        return BadRequest(new { message = "❌ Username and Password are required!" });
+        
+        //  ---USER REGISTRATION---
+      
 
-    string username = user.Username.Trim().ToLower();
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] User user)
+        {
+            // Validate empty username or password
+            if (string.IsNullOrWhiteSpace(user.Username) || string.IsNullOrWhiteSpace(user.Password))
+                return BadRequest(new { message = "Username and Password are required" });
 
-    if (_context.Users.Any(u => u.Username.ToLower() == username))
-        return BadRequest(new { message = "❌ User already exists!" });
+            // Check if username already exists (case-insensitive)
+            string username = user.Username.Trim().ToLower();
+            if (_context.Users.Any(u => u.Username.ToLower() == username))
+                return BadRequest(new { message = "User already exists" });
 
-    User newUser = new User()
-    {
-        Username = user.Username.Trim(),
-        PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.Password),
-        Role = "User"
-    };
+            // Create user with hashed password (never store raw password)
+            User newUser = new User()
+            {
+                Username = user.Username.Trim(),
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.Password),
+                Role = "User"
+            };
 
-    _context.Users.Add(newUser);
-    await _context.SaveChangesAsync();
+            _context.Users.Add(newUser);
+            await _context.SaveChangesAsync();
 
-    return Ok(new { message = "🎉 User Registered Successfully!" });
-}
+            return Ok(new { message = "User Registered Successfully" });
+        }
 
+        
+        //  ---USER LOGIN + JWT GENERATION---
+        
 
         [HttpPost("login")]
-public async Task<IActionResult> Login([FromBody] User user)
-{
-    if (string.IsNullOrWhiteSpace(user.Username) || string.IsNullOrWhiteSpace(user.Password))
-        return BadRequest(new { message = "❌ Username and Password are required!" });
+        public async Task<IActionResult> Login([FromBody] User user)
+        {
+            // Validate credentials
+            if (string.IsNullOrWhiteSpace(user.Username) || string.IsNullOrWhiteSpace(user.Password))
+                return BadRequest(new { message = "Username and Password are required" });
 
-    var dbUser = await _context.Users.FirstOrDefaultAsync(
-        u => u.Username.ToLower().Trim() == user.Username.ToLower().Trim()
-    );
+            // Check if user exists
+            var dbUser = await _context.Users.FirstOrDefaultAsync(
+                u => u.Username.ToLower().Trim() == user.Username.ToLower().Trim()
+            );
+            if (dbUser == null)
+                return Unauthorized(new { message = "Invalid Username" });
 
-    if (dbUser == null)
-        return Unauthorized(new { message = "❌ Invalid Username!" });
+            // Verify stored hashed password
+            if (!BCrypt.Net.BCrypt.Verify(user.Password, dbUser.PasswordHash))
+                return Unauthorized(new { message = "Invalid Password" });
 
-    if (!BCrypt.Net.BCrypt.Verify(user.Password, dbUser.PasswordHash))
-        return Unauthorized(new { message = "❌ Invalid Password!" });
+            // Generate JWT token for valid user
+            string token = _jwt.GenerateToken(dbUser.Id, dbUser.Username);
 
-    string token = _jwt.GenerateToken(dbUser.Id, dbUser.Username);
-
-    return Ok(new 
-    { 
-        token, 
-        username = dbUser.Username, 
-        role = dbUser.Role 
-    });
-}
-
+            return Ok(new
+            {
+                token,
+                username = dbUser.Username,
+                role = dbUser.Role
+            });
+        }
     }
 }
