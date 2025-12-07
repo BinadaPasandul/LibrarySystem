@@ -27,7 +27,8 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+        )
     };
 });
 
@@ -35,7 +36,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<JwtService>();
 
 // ==============================
-// 🗂 Database Connection
+// 🗂 Database Connection (SQLite)
 // ==============================
 builder.Services.AddDbContext<LibraryContext>(options =>
     options.UseSqlite("Data Source=library.db"));
@@ -46,7 +47,7 @@ builder.Services.AddDbContext<LibraryContext>(options =>
 builder.Services.AddControllers();
 
 // ==============================
-// 🌐 CORS for React
+// 🌐 CORS for React Frontend
 // ==============================
 builder.Services.AddCors(options =>
 {
@@ -60,19 +61,16 @@ builder.Services.AddCors(options =>
 });
 
 // ==============================
-// 📌 OpenAPI (Swagger, optional)
+// 📌 Swagger (Optional for APIs)
 // ==============================
-builder.Services.AddOpenApi(); // if this was in template, keep it
+builder.Services.AddOpenApi(); // keep if available in your template
 
-// ==============================
-// 🚀 Build App
-// ==============================
 var app = builder.Build();
 
 // 🌐 Enable CORS
 app.UseCors("AllowReactApp");
 
-// 🔐 Enable Auth Middleware (only once)
+// 🔐 Enable Auth Middleware
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -102,6 +100,7 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast");
 
+// Run the application
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
