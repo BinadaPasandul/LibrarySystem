@@ -134,7 +134,9 @@ DELETE	/api/Books/{id}	Remove Book
 👨‍💻 Developer
 
 EM Binada Pasandul
+
 binadapasandul@gmail.com
+
 📅 2025
 
 
@@ -144,9 +146,9 @@ binadapasandul@gmail.com
 🔥 Extra Feature
 
 
-🎉 Implemented JWT Authentication with UI lock (Not required by assignment but adds professional quality).
+🎉 Implemented JWT Authentication with UI lock.
 
 ✔ License
 
 This project is created as part of a software engineering internship assignment.
-Usage is allowed for educational purposes only.
+
