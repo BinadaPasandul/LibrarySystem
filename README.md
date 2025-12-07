@@ -3,11 +3,12 @@
 A modern full-stack library management system built with ASP.NET Core Web API and React + TypeScript, featuring SQLite database + authentication + premium UI.
 
 🚀 Tech Stack
-Layer	Technology
-Frontend	React + TypeScript + Vite + Axios + Tailwind CSS
-Backend	ASP.NET Core Web API + C# + Entity Framework Core
-Database	SQLite
-Auth	JWT-based Login & Registration
+Layer	       Technology 
+
+Frontend	   React + TypeScript + Vite + Axios + Tailwind CSS
+Backend	     ASP.NET Core Web API + C# + Entity Framework Core
+Database     SQLite
+Auth	       JWT-based Login & Registration
 
 📌 Features
 ✔ User can login / register
