@@ -2,6 +2,10 @@
 
 A modern full-stack library management system built with ASP.NET Core Web API and React + TypeScript, featuring SQLite database + authentication + premium UI.
 
+
+
+
+
 🚀 Tech Stack
 Layer	       Technology 
 
@@ -12,6 +16,10 @@ Backend	     ASP.NET Core Web API + C# + Entity Framework Core
 Database     SQLite
 
 Auth	       JWT-based Login & Registration
+
+
+
+
 
 📌 Features
 
@@ -30,6 +38,20 @@ Auth	       JWT-based Login & Registration
 ✔ Professional UI / UX
 
 ✔ Protected routes (Add / Edit only when logged in)
+
+
+
+
+🔐 Role Permissions
+
+| Role                       | View Books | Add  | Edit | Delete |
+
+
+| **Guest (Not Logged In)**  | ✔          | ❌  | ❌   | ❌    |
+
+| **Authenticated User**     | ✔          |  ✔  |  ✔   |  ✔    |
+
+
 
 
 📦 Folder Structure
@@ -51,6 +73,8 @@ Library-system/
 │   │   ├── services/
 
 
+
+
 🛠️ Setup Instructions
 📍 Backend Setup
 
@@ -68,6 +92,10 @@ dotnet run
 
 📌 Backend will run on: http://localhost:5156
 
+
+
+
+
 💻 Frontend Setup
 
 cd frontend/library-frontend
@@ -78,6 +106,11 @@ npm run dev
 
 
 📌 Frontend will run on: http://localhost:5173
+
+
+
+
+
 
 🔐 Default API Endpoints (Examples)
 
@@ -102,6 +135,10 @@ DELETE	/api/Books/{id}	Remove Book
 EM Binada Pasandul
 
 📅 2025
+
+
+
+
 
 🔥 Extra Feature
 
