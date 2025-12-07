@@ -16,13 +16,21 @@ Auth	       JWT-based Login & Registration
 📌 Features
 
 ✔ User can login / register
+
 ✔ Add new books
+
 ✔ View all books with filters
+
 ✔ Edit book information
+
 ✔ Delete books
+
 ✔ SQLite persistent storage
+
 ✔ Professional UI / UX
+
 ✔ Protected routes (Add / Edit only when logged in)
+
 
 📦 Folder Structure
 
@@ -61,26 +69,42 @@ dotnet run
 📌 Backend will run on: http://localhost:5156
 
 💻 Frontend Setup
+
 cd frontend/library-frontend
+
 npm install
+
 npm run dev
+
 
 📌 Frontend will run on: http://localhost:5173
 
 🔐 Default API Endpoints (Examples)
+
 Method	Endpoint	Description
+
 POST	/api/Auth/register	User Registration
+
 POST	/api/Auth/login	User Login
+
 GET	/api/Books	Get All Books
+
 POST	/api/Books	Add Book
+
 PUT	/api/Books/{id}	Edit Book
+
 DELETE	/api/Books/{id}	Remove Book
 
+
+
 👨‍💻 Developer
+
 EM Binada Pasandul
+
 📅 2025
 
 🔥 Extra Feature
+
 
 🎉 Implemented JWT Authentication with UI lock (Not required by assignment but adds professional quality).
 
