@@ -14,6 +14,7 @@ Database     SQLite
 Auth	       JWT-based Login & Registration
 
 📌 Features
+
 ✔ User can login / register
 ✔ Add new books
 ✔ View all books with filters
@@ -24,22 +25,37 @@ Auth	       JWT-based Login & Registration
 ✔ Protected routes (Add / Edit only when logged in)
 
 📦 Folder Structure
+
 Library-system/
+
 │── backend/        # ASP.NET Core Web API
+
 │── frontend/       # React + TypeScript Application
+
 │   ├── public/
+
 │   ├── src/
+
 │   │   ├── pages/
+
 │   │   ├── components/
+
 │   │   ├── services/
+
 
 🛠️ Setup Instructions
 📍 Backend Setup
+
 cd backend
+
 dotnet restore
+
 dotnet build
+
 dotnet ef database update   # (If migrations exist)
+
 dotnet run
+
 
 
 📌 Backend will run on: http://localhost:5156
