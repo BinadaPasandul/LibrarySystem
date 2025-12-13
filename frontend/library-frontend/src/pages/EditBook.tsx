@@ -93,7 +93,7 @@ function EditBook() {
             >
               <option value="">Select Category</option>
               <option value="Fiction">Fiction</option>
-              <option value="Non-Fiction">Non Fiction</option>
+              <option value="Non-Fiction">Non-Fiction</option>
               <option value="Science">Science</option>
               <option value="Biography">Biography</option>
               <option value="History">History</option>

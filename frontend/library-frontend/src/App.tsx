@@ -48,7 +48,7 @@ function App() {
                 Book Ledger
               </h1>
               <p className="text-xs text-blue-300 font-medium">
-                Professional Library Management System
+                 Library Management System
               </p>
             </div>
           </Link>
