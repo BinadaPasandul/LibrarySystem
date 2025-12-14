@@ -71,7 +71,7 @@ function App() {
                 to="/add"
                 className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2.5 rounded-xl font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
               >
-                Add New Book
+                Add  New Book
               </Link>
             )}
 
