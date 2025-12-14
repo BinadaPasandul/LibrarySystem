@@ -97,7 +97,7 @@ function App() {
                     ? "opacity-50 pointer-events-none"
                     : "hover:bg-white/10 hover:text-white"}`}
                 >
-                  Sign  In
+                  Sign In
                 </Link>
 
                 {/* Get Started (Register) */}
